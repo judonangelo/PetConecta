@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso à Intranet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav>
+        <a href="landing.html">HOME</a>
+        <a href="login.html">LOGIN</a>
+        <a href="cadastro.html">CADASTRAR</a>
+        <a href="fale_conosco.html">FALE CONOSCO</a>
+        <a href="#">TRABALHE CONOSCO</a>
+    </nav>
+
+
+    <header class="header">
+        <h1>Login</h1>
+    </header>
+  
+    <div class="container">
+
+        <div class="form-box">
+            <label class="label" for="Login">E-mail Corporativo</label>
+            <input class="input" type="email" id="Login">
+            
+            <label class="label" for="Senha">Senha</label>
+            <input class="input" type="password" id="Senha">
+    
+            <a href="#" class="forgot-password">Esqueceu sua senha?</a>
+            
+            <button class="btn-primary" id="btn_enviar">Entrar</button>
+        </div>
+        <p id="p_enviar" style="color: black;">Esperando ação</p>
+    
+    </div>
+</body>
+<div>
+    <footer>
+        <br>
+        <p>&copy; 2025 PetConecta</p>
+    </footer>
+</div>
+
+<script>
+    // criar um evento para quando clicar no botão
+    document.getElementById("btn_enviar").addEventListener("click", async ()=>{
+        // primeira etapa - pegar as informções dos inputs 
+        const Senha = document.getElementById("Senha").value
+        const Login = document.getElementById("Login").value
+        
+
+
+        // segunda etapa - fazeer s requisição para o back-end
+        const resposta = await fetch(`http://localhost:3000/login`,{
+            method:"POST",
+            headers:{
+                "Accept":"application/json",
+                "content-type":"application/json"
+            }, 
+            body:JSON.stringify({
+            "Senha": Senha,
+            "Login": Login,
+        
+            })
+            
+        })
+
+        // terceira etapa - pegar a resposta do back-end
+        if(resposta.ok == true){
+            const dados = await resposta.json()
+            document.getElementById("p_enviar").innerText = dados.resposta
+        }else{
+
+        }
+    })
+
+
+</script>
+
+</html>
+
+
+
+
+
+ 

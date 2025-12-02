@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fale-conosco</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <nav>
+        <a href="landing.html">HOME</a>
+        <a href="login.html">LOGIN</a>
+        <a href="cadastro.html">CADASTRAR</a>
+        <a href="fale_conosco.html">FALE CONOSCO</a>
+        <a href="#">TRABALHE CONOSCO</a>
+    </nav>
+
+    
+    <header class="header">
+        <h1>Fale-conosco</h1>
+    </header>
+    <div class="container">
+
+        <div class="form-box">
+    
+            <label class="label" for="nome">Nome:</label>
+            <input class="input" type="text" id="nome">
+            
+            <label class="label" for="email">E-mail:</label>
+            <input class="input" type="email" id="email">
+    
+            <label class="label" for="assunto">Assunto:</label>
+            <input class="input" type="text" id="assunto">
+    
+            <label class="label" for="mensagem">Mensagem:</label>
+            <textarea class="input" id="mensagem"></textarea> 
+    
+            <button class="btn-primary" id="btn_enviar">Enviar</button>
+        </div>
+        
+        <p id="p_enviar" style="color: black;">Esperando ação</p>
+    
+    </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 PetConecta</p>
+        
+    </footer>
+
+</body>
+<script>
+      // criar um evento para quando clicar no botão
+      document.getElementById("btn_enviar").addEventListener("click", async ()=>{
+        // primeira etapa - pegar as informções dos inputs 
+        const Nome = document.getElementById("nome").value
+        const Email = document.getElementById("email").value
+        const Assunto = document.getElementById("assunto").value
+        const Mensagem = document.getElementById("mensagem").value
+
+
+
+
+        // segunda etapa - fazeer s requisição para o back-end
+        const resposta = await fetch(`http://localhost:3000/fale_conosco`,{
+            method:"POST",
+            headers:{
+                "Accept":"application/json",
+                "content-type":"application/json"
+            }, 
+            body:JSON.stringify({
+            "Nome": Nome,
+            "Email": Email,
+            "Assunto": Assunto,
+            "Mensagem": Mensagem
+            
+            })
+            
+        })
+
+        // terceira etapa - pegar a resposta do back-end
+        if(resposta.ok == true){
+            const dados = await resposta.json()
+            document.getElementById("p_enviar").innerText = dados.resposta
+        }else{
+
+        }
+    })
+</script>
+</html>
